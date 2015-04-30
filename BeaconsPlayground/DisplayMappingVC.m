@@ -33,10 +33,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self precalculateVisualizationParamsForBeacons:_mappedModel.beacons];
     [self displayWalls:_mappedModel.walls];
 }
-
 
 - (void)precalculateVisualizationParamsForBeacons:(NSArray*)beacons
 {
@@ -153,9 +157,15 @@
     
     //Perform trilateration and show user location
     CGPoint location = [MiBeaconTrilateration trilaterateLocationFromBeacons:beacons];
-    CGPoint screenLocation = CGPointMake(location.x*_screenToAreaProportion, location.y*_screenToAreaProportion);
+    CGPoint correctedLocation = [_mappedModel correctLocation:location];
+    CGPoint screenLocation = CGPointMake(correctedLocation.x*_screenToAreaProportion, correctedLocation.y*_screenToAreaProportion);
+    
+    _infoTV.text = [_infoTV.text stringByAppendingString:[NSString stringWithFormat:@"LOCATION| x:%f-y:%f\n",location.x,location.y]];
+    _infoTV.text = [_infoTV.text stringByAppendingString:[NSString stringWithFormat:@"CORRECTED LOCATION| x:%f-y:%f\n",correctedLocation.x,correctedLocation.y]];
+    
     _locationIV.center = screenLocation;
     NSLog(@"LOCATION: %f %f",location.x,location.y);
+    NSLog(@"CORRECTED LOCATION: %f %f",correctedLocation.x,correctedLocation.y);
     NSLog(@"SCREEN LOCATION: %f %f",screenLocation.x,screenLocation.y);
 }
 

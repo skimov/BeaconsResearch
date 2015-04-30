@@ -26,19 +26,13 @@
 @property (nonatomic, strong) ESTBeaconManager *beaconManager;
 @property (nonatomic, strong) ESTBeaconRegion *region;
 
-//@property (unsafe_unretained, nonatomic) int numberOfBeacons;
 @property (strong, nonatomic) NSMutableArray * walls;
 @property (strong, nonatomic) NSMutableArray * initialBeacons;
 @property (strong, nonatomic) NSMutableArray * discoveredBeacons;
 @property (unsafe_unretained, nonatomic) double standardDeviationOfMeasurementNoise;    //R
 @property (strong, nonatomic) KalmanFilterManager * kalmanFilterManager;
 
-@property (strong, nonatomic) IndoorMappingModel * map;
 @property (strong, nonatomic) DisplayMappingVC * displayVC;
-//@property (strong, nonatomic) UIView * displayView;
-//@property (strong, nonatomic) UITextView * infoTV;
-//@property (unsafe_unretained, nonatomic) CGFloat screenToAreaProportion;
-//@property (strong, nonatomic) UIImageView * locationIV;
 
 @property (strong, nonatomic) UIButton * turnRangingOnOffB;
 @property (unsafe_unretained, nonatomic) BOOL rangingOn;
@@ -84,13 +78,6 @@
     _discoveredBeacons = [[NSMutableArray alloc] init];
     _initialBeacons = [[NSMutableArray alloc] init];
     _standardDeviationOfMeasurementNoise = 0.1;
-    
-//    NSArray * macAddresses = @[@"d950779321d5",@"ca09df1f6ec8",@"d330ee513eff",@"c77cd105e38e",@"e38c02bacf19",@"cbad484e7466"];
-//    for (NSString * macAddress in macAddresses)
-//    {
-//        KalmanFilteredBeacon * beacon = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:macAddress];
-//        [_initialBeacons addObject:beacon];
-//    }
     
     KalmanFilteredBeacon * beacon1 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:@"d950779321d5" coordinates:CGPointMake(0, 6.75)];
     [_initialBeacons addObject:beacon1];
@@ -261,12 +248,9 @@
     
     if (_initialBeacons.count == 0)
     {
-        [self mapDiscoveredBeacons:_discoveredBeacons];
         _initialBeacons = nil;
-        _discoveredBeacons = nil;
         
         [self initDisplayVC];
-        [_displayVC displayWalls:_walls];
         
         [self initFilterManager];
         
@@ -305,16 +289,11 @@
 
 #pragma mark - Visualization
 
-- (void)mapDiscoveredBeacons:(NSArray*)beacons
-{
-    _map = [[IndoorMappingModel alloc] initWithBeacons:_discoveredBeacons walls:_walls];
-//    _map.beacons = _discoveredBeacons;
-//    _map.walls = _walls;
-}
-
 - (void)initDisplayVC
 {
-    _displayVC = [[DisplayMappingVC alloc] init];
+    IndoorMappingModel * map = [[IndoorMappingModel alloc] initWithBeacons:_discoveredBeacons walls:_walls];
+    _discoveredBeacons = nil;
+    _displayVC = [[DisplayMappingVC alloc] initWithModel:map];
     _displayVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width - 150, self.view.frame.size.height);
     
     __weak ViewController *weakSelf = self;
@@ -327,13 +306,11 @@
     [self addChildViewController:_displayVC];
     [self.view addSubview:_displayVC.view];
     [_displayVC didMoveToParentViewController:self];
-    
-    [_displayVC precalculateVisualizationParamsForBeacons:_map.beacons];
 }
 
 - (void)initFilterManager
 {
-    _kalmanFilterManager = [[KalmanFilterManager alloc] initWithBeacons:_map.beacons];
+    _kalmanFilterManager = [[KalmanFilterManager alloc] initWithBeacons:_displayVC.mappedModel.beacons];
 }
 
 

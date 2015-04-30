@@ -7,6 +7,7 @@
 //
 
 #import "IndoorMappingModel.h"
+#import "MappedBeacon.h"
 
 @interface IndoorMappingModel ()
 
@@ -24,6 +25,20 @@
     self = [super init];
     
     _beacons = beacons;
+    _minX = INFINITY;
+    _minY = INFINITY;
+    _maxX = 0;
+    _maxY = 0;
+    for (MappedBeacon * beacon in _beacons)
+    {
+        if (beacon.coordinates.x >_maxX) _maxX = beacon.coordinates.x;
+        if (beacon.coordinates.y >_maxY) _maxY = beacon.coordinates.y;
+        if (beacon.coordinates.x <_minX) _minX = beacon.coordinates.x;
+        if (beacon.coordinates.y <_minY) _minY = beacon.coordinates.y;
+    }
+    
+    NSLog(@">>>>>>> %f %f %f %f",_minX,_minY,_maxX,_maxY);
+    
     _walls = walls;
     
     return self;
@@ -32,9 +47,11 @@
 - (CGPoint)correctLocation:(CGPoint)location
 {
     CGFloat x = (location.x > _minX) ? location.x : _minX;
-    x = (location.x < _maxX) ? location.x : _maxX;
+    x = (x < _maxX) ? x : _maxX;
     CGFloat y = (location.y > _minY) ? location.y : _minY;
-    y = (location.y > _maxY) ? location.y : _maxY;
+    y = (y < _maxY) ? y : _maxY;
+    
+    //TODO: correct for walls
     
     return CGPointMake(x,y);
 }
