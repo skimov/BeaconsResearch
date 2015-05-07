@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Stanislav Kimov. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "EstimoteMonitorVC.h"
 //#import "ESTUtilityManager.h"
 
 #import "KalmanFilterManager.h"
@@ -18,9 +18,9 @@
 
 #import "Wall.h"
 
-#define ESTIMOTE_PROXIMITY_UUID             [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"]
+#define ESTIMOTE_PROXIMITY_UUID [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"]
 
-@interface ViewController ()
+@interface EstimoteMonitorVC ()
 
 //Beacons
 @property (nonatomic, strong) ESTBeaconManager *beaconManager;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation ViewController
+@implementation EstimoteMonitorVC
 
 #pragma mark - Init
 
@@ -296,7 +296,7 @@
     _displayVC = [[DisplayMappingVC alloc] initWithModel:map];
     _displayVC.view.frame = CGRectMake(0, 0, self.view.frame.size.width - 150, self.view.frame.size.height);
     
-    __weak ViewController *weakSelf = self;
+    __weak EstimoteMonitorVC *weakSelf = self;
     _displayVC.didTapMap = ^(CGPoint coordinates)
     {
         [weakSelf.kalmanFilterManager newIterationWithSimulatedPoint:coordinates];

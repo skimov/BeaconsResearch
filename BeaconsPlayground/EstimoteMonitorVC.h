@@ -12,7 +12,7 @@
 #import "ESTBeaconManager.h"
 #import "ESTBeacon.h"
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate, ESTBeaconManagerDelegate>
+@interface EstimoteMonitorVC : UIViewController <CLLocationManagerDelegate, ESTBeaconManagerDelegate>
 
 
 @end

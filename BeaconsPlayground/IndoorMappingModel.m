@@ -52,22 +52,22 @@
 
 - (CGPoint)projectPoint:(CGPoint)point toLineWithStart:(CGPoint)lineStart end:(CGPoint)lineEnd
 {
-    NSLog(@"Project point: %f %f",point.x,point.y);
-    NSLog(@"To line: %f %f - %f %f",lineStart.x,lineStart.y,lineEnd.x,lineEnd.y);
+//    NSLog(@"Project point: %f %f",point.x,point.y);
+//    NSLog(@"To line: %f %f - %f %f",lineStart.x,lineStart.y,lineEnd.x,lineEnd.y);
     CGFloat m = (CGFloat)(lineEnd.y - lineStart.y) / (lineEnd.x - lineStart.x + 0.0000001); //In case of zero + very small value, not to create a black hole.
     CGFloat b = (CGFloat)lineStart.y - (m * lineStart.x);
     
     CGFloat x = (m * point.y + point.x - m * b) / (m * m + 1);
     CGFloat y = (m * m * point.y + m * point.x + b) / (m * m + 1);
     
-    NSLog(@"m:%f b:%f x:%f y:%f",m,b,x,y);
-    NSLog(@"Projected: %f %f to -> %f %f",point.x,point.y,x,y);
+//    NSLog(@"m:%f b:%f x:%f y:%f",m,b,x,y);
+//    NSLog(@"Projected: %f %f to -> %f %f",point.x,point.y,x,y);
     return CGPointMake(x, y);
 }
 
 - (CGPoint)correctLocation:(CGPoint)location
 {
-    NSLog(@"Correct location: %f %f",location.x,location.y);
+//    NSLog(@"Correct location: %f %f",location.x,location.y);
     CGFloat x = location.x;
     CGFloat y = location.y;
     

@@ -11,12 +11,14 @@
 		2852B70E1ADD42CC005368C9 /* beacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2852B70D1ADD42CC005368C9 /* beacon.png */; };
 		285D519A1AC3239D00EE8DB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 285D51991AC3239D00EE8DB4 /* main.m */; };
 		285D519D1AC3239D00EE8DB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 285D519C1AC3239D00EE8DB4 /* AppDelegate.m */; };
-		285D51A01AC3239D00EE8DB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 285D519F1AC3239D00EE8DB4 /* ViewController.m */; };
+		285D51A01AC3239D00EE8DB4 /* EstimoteMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 285D519F1AC3239D00EE8DB4 /* EstimoteMonitorVC.m */; };
 		285D51A31AC3239D00EE8DB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 285D51A11AC3239D00EE8DB4 /* Main.storyboard */; };
 		285D51A51AC3239D00EE8DB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 285D51A41AC3239D00EE8DB4 /* Images.xcassets */; };
 		285D51A81AC3239D00EE8DB4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285D51A61AC3239D00EE8DB4 /* LaunchScreen.xib */; };
 		285D51B41AC3239D00EE8DB4 /* BeaconsPlaygroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 285D51B31AC3239D00EE8DB4 /* BeaconsPlaygroundTests.m */; };
 		285D51BE1AC323A600EE8DB4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 285D51BD1AC323A600EE8DB4 /* CoreLocation.framework */; };
+		2870FB3B1AFB8AD30095FA00 /* CoreMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2870FB3A1AFB8AD30095FA00 /* CoreMonitorVC.m */; };
+		2870FB3E1AFB8DB70095FA00 /* CSMBeaconRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 2870FB3D1AFB8DB70095FA00 /* CSMBeaconRegion.m */; };
 		287A936C1AE7E9870046DB63 /* IndoorMappingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 287A936B1AE7E9870046DB63 /* IndoorMappingModel.m */; };
 		287A93701AE7EAA00046DB63 /* MappedBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 287A936F1AE7EAA00046DB63 /* MappedBeacon.m */; };
 		287A93731AE7EB2F0046DB63 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = 287A93721AE7EB2F0046DB63 /* Wall.m */; };
@@ -52,8 +54,8 @@
 		285D51991AC3239D00EE8DB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		285D519B1AC3239D00EE8DB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		285D519C1AC3239D00EE8DB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		285D519E1AC3239D00EE8DB4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		285D519F1AC3239D00EE8DB4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		285D519E1AC3239D00EE8DB4 /* EstimoteMonitorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EstimoteMonitorVC.h; sourceTree = "<group>"; };
+		285D519F1AC3239D00EE8DB4 /* EstimoteMonitorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EstimoteMonitorVC.m; sourceTree = "<group>"; };
 		285D51A21AC3239D00EE8DB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		285D51A41AC3239D00EE8DB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		285D51A71AC3239D00EE8DB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -61,6 +63,10 @@
 		285D51B21AC3239D00EE8DB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		285D51B31AC3239D00EE8DB4 /* BeaconsPlaygroundTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsPlaygroundTests.m; sourceTree = "<group>"; };
 		285D51BD1AC323A600EE8DB4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2870FB391AFB8AD30095FA00 /* CoreMonitorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreMonitorVC.h; sourceTree = "<group>"; };
+		2870FB3A1AFB8AD30095FA00 /* CoreMonitorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreMonitorVC.m; sourceTree = "<group>"; };
+		2870FB3C1AFB8DB70095FA00 /* CSMBeaconRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSMBeaconRegion.h; sourceTree = "<group>"; };
+		2870FB3D1AFB8DB70095FA00 /* CSMBeaconRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSMBeaconRegion.m; sourceTree = "<group>"; };
 		287A936A1AE7E9870046DB63 /* IndoorMappingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndoorMappingModel.h; sourceTree = "<group>"; };
 		287A936B1AE7E9870046DB63 /* IndoorMappingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndoorMappingModel.m; sourceTree = "<group>"; };
 		287A936E1AE7EAA00046DB63 /* MappedBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MappedBeacon.h; sourceTree = "<group>"; };
@@ -235,8 +241,12 @@
 		288C9D651ACC26A100C187A2 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				285D519E1AC3239D00EE8DB4 /* ViewController.h */,
-				285D519F1AC3239D00EE8DB4 /* ViewController.m */,
+				285D519E1AC3239D00EE8DB4 /* EstimoteMonitorVC.h */,
+				285D519F1AC3239D00EE8DB4 /* EstimoteMonitorVC.m */,
+				2870FB391AFB8AD30095FA00 /* CoreMonitorVC.h */,
+				2870FB3A1AFB8AD30095FA00 /* CoreMonitorVC.m */,
+				2870FB3C1AFB8DB70095FA00 /* CSMBeaconRegion.h */,
+				2870FB3D1AFB8DB70095FA00 /* CSMBeaconRegion.m */,
 			);
 			name = VC;
 			sourceTree = "<group>";
@@ -437,7 +447,9 @@
 				288C9D6B1ACC27FC00C187A2 /* KalmanFilteredBeacon.m in Sources */,
 				287A93771AE7EF490046DB63 /* DisplayMappingVC.m in Sources */,
 				287A93701AE7EAA00046DB63 /* MappedBeacon.m in Sources */,
-				285D51A01AC3239D00EE8DB4 /* ViewController.m in Sources */,
+				2870FB3E1AFB8DB70095FA00 /* CSMBeaconRegion.m in Sources */,
+				285D51A01AC3239D00EE8DB4 /* EstimoteMonitorVC.m in Sources */,
+				2870FB3B1AFB8AD30095FA00 /* CoreMonitorVC.m in Sources */,
 				288C9D6E1ACC3CC800C187A2 /* KalmanFilterManager.m in Sources */,
 				285D519D1AC3239D00EE8DB4 /* AppDelegate.m in Sources */,
 				285D519A1AC3239D00EE8DB4 /* main.m in Sources */,
