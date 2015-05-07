@@ -20,4 +20,13 @@
     return self;
 }
 
+- (instancetype)initWithStart:(CGPoint)start end:(CGPoint)end insidePoint:(CGPoint)insidePoint
+{
+    self = [self initWithStart:start end:end];
+    
+    _insidePoint = insidePoint;
+    
+    return self;
+}
+
 @end

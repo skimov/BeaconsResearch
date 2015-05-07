@@ -81,22 +81,22 @@
     
     KalmanFilteredBeacon * beacon1 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:@"d950779321d5" coordinates:CGPointMake(0, 6.75)];
     [_initialBeacons addObject:beacon1];
-    Wall * wall1 = [[Wall alloc] initWithStart:CGPointMake(0, 0) end:CGPointMake(0, 13.5)];
+    Wall * wall1 = [[Wall alloc] initWithStart:CGPointMake(0, 0) end:CGPointMake(0, 13.5) insidePoint:CGPointMake(1, 1)];
     [_walls addObject:wall1];
     
     KalmanFilteredBeacon * beacon2 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:@"ca09df1f6ec8" coordinates:CGPointMake(2.25, 13.5)];
     [_initialBeacons addObject:beacon2];
-    Wall * wall2 = [[Wall alloc] initWithStart:CGPointMake(0, 13.5) end:CGPointMake(4.5, 13.5)];
+    Wall * wall2 = [[Wall alloc] initWithStart:CGPointMake(0, 13.5) end:CGPointMake(4.5, 13.5) insidePoint:CGPointMake(1, 1)];
     [_walls addObject:wall2];
     
     KalmanFilteredBeacon * beacon3 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:@"d330ee513eff" coordinates:CGPointMake(4.5, 6.75)];
     [_initialBeacons addObject:beacon3];
-    Wall * wall3 = [[Wall alloc] initWithStart:CGPointMake(4.5, 13.5) end:CGPointMake(4.5, 0)];
+    Wall * wall3 = [[Wall alloc] initWithStart:CGPointMake(4.5, 13.5) end:CGPointMake(4.5, 0) insidePoint:CGPointMake(1, 1)];
     [_walls addObject:wall3];
     
     KalmanFilteredBeacon * beacon4 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 macAddr:@"c77cd105e38e" coordinates:CGPointMake(2.25, 0)];
     [_initialBeacons addObject:beacon4];
-    Wall * wall4 = [[Wall alloc] initWithStart:CGPointMake(4.5, 0) end:CGPointMake(0, 0)];
+    Wall * wall4 = [[Wall alloc] initWithStart:CGPointMake(4.5, 0) end:CGPointMake(0, 0) insidePoint:CGPointMake(1, 1)];
     [_walls addObject:wall4];
 }
 

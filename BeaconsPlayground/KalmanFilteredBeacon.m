@@ -52,6 +52,7 @@
 - (void)performCorrection
 {
     NSLog(@"performCorrection");
+    _predictedErrorCovariance = 1;
     NSLog(@"predicted err cov: %f   E: %f",_predictedErrorCovariance,_R);
     _K = _predictedErrorCovariance/(_predictedErrorCovariance + _R);
     NSLog(@"K: %f",_K);

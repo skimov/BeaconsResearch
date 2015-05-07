@@ -17,5 +17,6 @@
 @property (unsafe_unretained, nonatomic) CGPoint insidePoint;   //Distance 1m from the center inside the room. To show the direction. Can be changed later for something better (maybe).
 
 - (instancetype)initWithStart:(CGPoint)start end:(CGPoint)end;
+- (instancetype)initWithStart:(CGPoint)start end:(CGPoint)end insidePoint:(CGPoint)insidePoint;
 
 @end

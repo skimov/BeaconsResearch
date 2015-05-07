@@ -8,6 +8,7 @@
 
 #import "IndoorMappingModel.h"
 #import "MappedBeacon.h"
+#import "Wall.h"
 
 @interface IndoorMappingModel ()
 
@@ -44,16 +45,50 @@
     return self;
 }
 
+- (BOOL)point:(CGPoint)c isLeftOfLineWithStart:(CGPoint)a end:(CGPoint)b
+{
+    return ((b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)) > 0;
+}
+
+- (CGPoint)projectPoint:(CGPoint)point toLineWithStart:(CGPoint)lineStart end:(CGPoint)lineEnd
+{
+    NSLog(@"Project point: %f %f",point.x,point.y);
+    NSLog(@"To line: %f %f - %f %f",lineStart.x,lineStart.y,lineEnd.x,lineEnd.y);
+    CGFloat m = (CGFloat)(lineEnd.y - lineStart.y) / (lineEnd.x - lineStart.x + 0.0000001); //In case of zero + very small value, not to create a black hole.
+    CGFloat b = (CGFloat)lineStart.y - (m * lineStart.x);
+    
+    CGFloat x = (m * point.y + point.x - m * b) / (m * m + 1);
+    CGFloat y = (m * m * point.y + m * point.x + b) / (m * m + 1);
+    
+    NSLog(@"m:%f b:%f x:%f y:%f",m,b,x,y);
+    NSLog(@"Projected: %f %f to -> %f %f",point.x,point.y,x,y);
+    return CGPointMake(x, y);
+}
+
 - (CGPoint)correctLocation:(CGPoint)location
 {
-    CGFloat x = (location.x > _minX) ? location.x : _minX;
+    NSLog(@"Correct location: %f %f",location.x,location.y);
+    CGFloat x = location.x;
+    CGFloat y = location.y;
+    
+    //Very rough first correction for values completely outside the bounds.
+    x = (location.x > _minX) ? location.x : _minX;
     x = (x < _maxX) ? x : _maxX;
-    CGFloat y = (location.y > _minY) ? location.y : _minY;
+    y = (location.y > _minY) ? location.y : _minY;
     y = (y < _maxY) ? y : _maxY;
     
-    //TODO: correct for walls
+    //Correct for walls
+    CGPoint currentCorrectedLocation = CGPointMake(x, y);
+    for (Wall * wall in _walls)
+    {
+        //Check for each wall if point lies on the right side.
+        if ([self point:currentCorrectedLocation isLeftOfLineWithStart:wall.startPoint end:wall.endPoint] != [self point:wall.insidePoint isLeftOfLineWithStart:wall.startPoint end:wall.endPoint])
+        {
+            currentCorrectedLocation = [self projectPoint:currentCorrectedLocation toLineWithStart:wall.startPoint end:wall.endPoint];
+        }
+    }
     
-    return CGPointMake(x,y);
+    return currentCorrectedLocation;
 }
 
 @end
