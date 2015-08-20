@@ -11,6 +11,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface CoreMonitorVC : UIViewController <CLLocationManagerDelegate>
+//Apparently even with core bluetooth we can't get a mac address for the beacons. Estimote SDK can do it through CB, but it takes some more trouble, so we're using Estimote SDK for beacons mac addresses now.
+//But
+@interface CoreMonitorVC : UIViewController <CLLocationManagerDelegate, CBCentralManagerDelegate>
 
 @end

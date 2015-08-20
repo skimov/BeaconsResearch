@@ -26,14 +26,17 @@
 @property (nonatomic, strong) ESTBeaconManager *beaconManager;
 @property (nonatomic, strong) ESTBeaconRegion *region;
 
+//Filtering + trilateration
 @property (strong, nonatomic) NSMutableArray * walls;
 @property (strong, nonatomic) NSMutableArray * initialBeacons;
 @property (strong, nonatomic) NSMutableArray * discoveredBeacons;
 @property (unsafe_unretained, nonatomic) double standardDeviationOfMeasurementNoise;    //R
 @property (strong, nonatomic) KalmanFilterManager * kalmanFilterManager;
 
+//Visualization
 @property (strong, nonatomic) DisplayMappingVC * displayVC;
 
+//Additional UI
 @property (strong, nonatomic) UIButton * turnRangingOnOffB;
 @property (unsafe_unretained, nonatomic) BOOL rangingOn;
 
@@ -42,14 +45,6 @@
 @implementation EstimoteMonitorVC
 
 #pragma mark - Init
-
-- (void)manuallyCreateRegion
-{
-    //    CLBeaconRegion * region = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:@""] identifier:@""];
-    //    CLLocationManager * locationManager = [[CLLocationManager alloc] init];
-    //    locationManager.delegate = self;
-    //    [locationManager startMonitoringForRegion:region];
-}
 
 - (void)createEstimoteBeaconManagerWithRegion
 {
