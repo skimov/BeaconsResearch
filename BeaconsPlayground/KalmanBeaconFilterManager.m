@@ -48,7 +48,8 @@
     _lastIteration = [NSMutableArray arrayWithArray:_currentIteration];
     NSMutableArray * processedLastIterationBeacons = [[NSMutableArray alloc] init]; //This one to keep track of all processed beacons in this iteration, and then remove them from last iteration. All unprocessed ones from prev iteration will be added to the current one in the unchanged state.
     _currentIteration = [[NSMutableArray alloc] init];
-    for (ESTBeacon * beacon in beacons)
+//    for (ESTBeacon * beacon in beacons)
+    for (RangedBeacon * beacon in beacons)
     {
         KalmanFilteredBeacon * filteredBeacon = nil;
 //        NSLog(@"Beacon mac: %@",filteredBeacon.macAddr);
@@ -64,8 +65,10 @@
         }
         
         if (!filteredBeacon) continue;
-        NSLog(@"DISTANCE: %f",beacon.distance.doubleValue);
-        KalmanFilteredBeacon * newFilteredBeacon = [[KalmanFilteredBeacon alloc] initWithPrevIteration:filteredBeacon measuredValue:beacon.distance.doubleValue];
+//        NSLog(@"DISTANCE: %f",beacon.distance.doubleValue);
+//        KalmanFilteredBeacon * newFilteredBeacon = [[KalmanFilteredBeacon alloc] initWithPrevIteration:filteredBeacon measuredValue:beacon.distance.doubleValue];
+        NSLog(@"DISTANCE: %f",beacon.distance);
+        KalmanFilteredBeacon * newFilteredBeacon = [[KalmanFilteredBeacon alloc] initWithPrevIteration:filteredBeacon measuredValue:beacon.distance];
         
         [newFilteredBeacon performCorrection];
         NSLog(@"Corrected value: %f",newFilteredBeacon.correctedVal);

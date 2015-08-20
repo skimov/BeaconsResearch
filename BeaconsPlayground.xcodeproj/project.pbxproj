@@ -33,6 +33,9 @@
 		2890936B1ACB2A6E0008CAC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2890936A1ACB2A6E0008CAC7 /* Foundation.framework */; };
 		2890936D1ACB2A8D0008CAC7 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2890936C1ACB2A8D0008CAC7 /* CoreBluetooth.framework */; };
 		2893A4501AE2D7BB003790A4 /* MiBeaconTrilateration.m in Sources */ = {isa = PBXBuildFile; fileRef = 2893A44F1AE2D7BB003790A4 /* MiBeaconTrilateration.m */; };
+		28A99F8F1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A99F8E1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.m */; };
+		28A99F931B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A99F921B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m */; };
+		28A99F971B8644D1000BE4F6 /* MeasurementWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A99F961B8644D1000BE4F6 /* MeasurementWriter.m */; };
 		28AB7C8F1B779A8C0006F56F /* Pedometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 28AB7C8E1B779A8C0006F56F /* Pedometer.m */; };
 		28B546341B6E87BF0033C33D /* KalmanPlaygroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B546331B6E87BF0033C33D /* KalmanPlaygroundVC.m */; };
 		28CA6DA81B77C96000B62247 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CA6DA71B77C96000B62247 /* arrow.png */; };
@@ -96,6 +99,12 @@
 		2890936C1ACB2A8D0008CAC7 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		2893A44E1AE2D7BB003790A4 /* MiBeaconTrilateration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiBeaconTrilateration.h; sourceTree = "<group>"; };
 		2893A44F1AE2D7BB003790A4 /* MiBeaconTrilateration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiBeaconTrilateration.m; sourceTree = "<group>"; };
+		28A99F8D1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleBeaconMeasurementStruct.h; sourceTree = "<group>"; };
+		28A99F8E1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleBeaconMeasurementStruct.m; sourceTree = "<group>"; };
+		28A99F911B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconMotionMeasurementStruct.h; sourceTree = "<group>"; };
+		28A99F921B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconMotionMeasurementStruct.m; sourceTree = "<group>"; };
+		28A99F951B8644D1000BE4F6 /* MeasurementWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeasurementWriter.h; sourceTree = "<group>"; };
+		28A99F961B8644D1000BE4F6 /* MeasurementWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementWriter.m; sourceTree = "<group>"; };
 		28AB7C8D1B779A8C0006F56F /* Pedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pedometer.h; sourceTree = "<group>"; };
 		28AB7C8E1B779A8C0006F56F /* Pedometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pedometer.m; sourceTree = "<group>"; };
 		28B546321B6E87BF0033C33D /* KalmanPlaygroundVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalmanPlaygroundVC.h; sourceTree = "<group>"; };
@@ -282,6 +291,7 @@
 		288C9D661ACC26B400C187A2 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				28A99F941B8642A6000BE4F6 /* Measurement */,
 				28AB7C8C1B779A790006F56F /* Step Detection */,
 				287A93741AE7EECC0046DB63 /* Display */,
 				287A93691AE7E9670046DB63 /* Mapping */,
@@ -318,6 +328,33 @@
 			name = MiBeaconTrilateration;
 			sourceTree = "<group>";
 		};
+		28A99F8C1B860526000BE4F6 /* Measurement Struct */ = {
+			isa = PBXGroup;
+			children = (
+				28A99F8D1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.h */,
+				28A99F8E1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.m */,
+			);
+			name = "Measurement Struct";
+			sourceTree = "<group>";
+		};
+		28A99F901B8638AB000BE4F6 /* Measurement Struct */ = {
+			isa = PBXGroup;
+			children = (
+				28A99F911B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.h */,
+				28A99F921B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m */,
+			);
+			name = "Measurement Struct";
+			sourceTree = "<group>";
+		};
+		28A99F941B8642A6000BE4F6 /* Measurement */ = {
+			isa = PBXGroup;
+			children = (
+				28A99F951B8644D1000BE4F6 /* MeasurementWriter.h */,
+				28A99F961B8644D1000BE4F6 /* MeasurementWriter.m */,
+			);
+			name = Measurement;
+			sourceTree = "<group>";
+		};
 		28AB7C8C1B779A790006F56F /* Step Detection */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +367,7 @@
 		28E429151B7CE08500493804 /* 1D */ = {
 			isa = PBXGroup;
 			children = (
+				28A99F8C1B860526000BE4F6 /* Measurement Struct */,
 				288C9D691ACC27FC00C187A2 /* KalmanFilteredBeacon.h */,
 				288C9D6A1ACC27FC00C187A2 /* KalmanFilteredBeacon.m */,
 				288C9D6C1ACC3CC800C187A2 /* KalmanBeaconFilterManager.h */,
@@ -341,6 +379,7 @@
 		28E429161B7CE08C00493804 /* 2D */ = {
 			isa = PBXGroup;
 			children = (
+				28A99F901B8638AB000BE4F6 /* Measurement Struct */,
 				28E429171B7CE14700493804 /* KalmanBeaconMotionFilter.h */,
 				28E429181B7CE14700493804 /* KalmanBeaconMotionFilter.m */,
 				28E4291A1B7CF5A100493804 /* KBMMatrix.h */,
@@ -507,10 +546,13 @@
 				287A937A1AE7F57A0046DB63 /* RangedBeacon.m in Sources */,
 				288C9D6B1ACC27FC00C187A2 /* KalmanFilteredBeacon.m in Sources */,
 				287A93771AE7EF490046DB63 /* DisplayMappingVC.m in Sources */,
+				28A99F8F1B86053C000BE4F6 /* SingleBeaconMeasurementStruct.m in Sources */,
 				28528B6B1B80B37A0048044E /* NormalDistribution.m in Sources */,
 				280A33C11B73506700344606 /* AccelGyroPlayVC.m in Sources */,
+				28A99F971B8644D1000BE4F6 /* MeasurementWriter.m in Sources */,
 				287A93701AE7EAA00046DB63 /* MappedBeacon.m in Sources */,
 				28AB7C8F1B779A8C0006F56F /* Pedometer.m in Sources */,
+				28A99F931B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m in Sources */,
 				285D51A01AC3239D00EE8DB4 /* ViewController.m in Sources */,
 				288C9D6E1ACC3CC800C187A2 /* KalmanBeaconFilterManager.m in Sources */,
 				28B546341B6E87BF0033C33D /* KalmanPlaygroundVC.m in Sources */,

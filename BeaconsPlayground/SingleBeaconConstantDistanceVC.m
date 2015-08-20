@@ -169,9 +169,12 @@
     {
         if (!_kalmanFilterManager)      //Init filter manager when discovered our beacon the 1st time.
         {
-            _kalmanFilterManager = [[KalmanBeaconFilterManager alloc] initWithBeacons:@[rangedSingleEstBeacon]];
+//            _kalmanFilterManager = [[KalmanBeaconFilterManager alloc] initWithBeacons:@[rangedSingleEstBeacon]];
+            _kalmanFilterManager = [[KalmanBeaconFilterManager alloc] initWithBeacons:@[_singleBeacon]];
         }
-        [_kalmanFilterManager newIterationWithBeacons:@[rangedSingleEstBeacon]];    //Perform iteration with Kalman filter
+//        [_kalmanFilterManager newIterationWithBeacons:@[rangedSingleEstBeacon]];    //Perform iteration with Kalman filter
+        _singleBeacon.distance = rangedSingleEstBeacon.distance.doubleValue;
+        [_kalmanFilterManager newIterationWithBeacons:@[_singleBeacon]];    //Perform iteration with Kalman filter
         
         KalmanFilteredBeacon * beaconAfterIteration = _kalmanFilterManager.currentIteration[0];
         NSLog(@"%@",[NSString stringWithFormat:@"x:%f-y:%f -> %f (%f)\n",beaconAfterIteration.coordinates.x,beaconAfterIteration.coordinates.y,beaconAfterIteration.distance,beaconAfterIteration.unfilteredDistance]);
