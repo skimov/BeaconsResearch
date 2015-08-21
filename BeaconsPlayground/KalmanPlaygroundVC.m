@@ -27,6 +27,9 @@
 #import "MeasurementWriter.h"
 #import "BeaconMotionMeasurementStruct.h"
 
+//To check for nan in trilateration
+#include <math.h>
+
 #define kStepDistance 0.5
 
 @interface KalmanPlaygroundVC ()
@@ -128,9 +131,9 @@
     [_walls addObject:wall1];
     
 //    KalmanFilteredBeacon * beacon2 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:2 coordinates:CGPointMake(2.25, 13.5)];
-    RangedBeacon * beacon2 = [[RangedBeacon alloc] initWithMajor:28360 minor:57119 coordinates:CGPointMake(2.25, 13.5)];
+    RangedBeacon * beacon2 = [[RangedBeacon alloc] initWithMajor:28360 minor:57119 coordinates:CGPointMake(2.25, 0)];
     [_initialBeacons addObject:beacon2];
-    Wall * wall2 = [[Wall alloc] initWithStart:CGPointMake(0, 13.5) end:CGPointMake(4.5, 13.5)];
+    Wall * wall2 = [[Wall alloc] initWithStart:CGPointMake(4.5, 0) end:CGPointMake(0, 0)];
     [_walls addObject:wall2];
     
 //    KalmanFilteredBeacon * beacon3 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:3 coordinates:CGPointMake(4.5, 6.75)];
@@ -140,9 +143,9 @@
     [_walls addObject:wall3];
     
 //    KalmanFilteredBeacon * beacon4 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:4 coordinates:CGPointMake(2.25, 0)];
-    RangedBeacon * beacon4 = [[RangedBeacon alloc] initWithMajor:58254 minor:5350 coordinates:CGPointMake(2.25, 0)];
+    RangedBeacon * beacon4 = [[RangedBeacon alloc] initWithMajor:58254 minor:5350 coordinates:CGPointMake(2.25, 13.5)];
     [_initialBeacons addObject:beacon4];
-    Wall * wall4 = [[Wall alloc] initWithStart:CGPointMake(4.5, 0) end:CGPointMake(0, 0)];
+    Wall * wall4 = [[Wall alloc] initWithStart:CGPointMake(0, 13.5) end:CGPointMake(4.5, 13.5)];
     [_walls addObject:wall4];
     
     _initialPosition = CGPointMake(2.25, 6.75);
@@ -359,6 +362,16 @@
     
     CGPoint currentLocationByDR = CGPointMake(_lastTrilaterationPoint.x + _deadReckoningDeltaCoord.x, _lastTrilaterationPoint.y + _deadReckoningDeltaCoord.y);
     CGPoint unfilteredTrilateratedFromBeaconsPoint = [MiBeaconTrilateration trilaterateLocationFromBeacons:rangedBeacons];
+    if ( (unfilteredTrilateratedFromBeaconsPoint.x == 0) && (unfilteredTrilateratedFromBeaconsPoint.y == 0) )
+    {
+        NSLog(@"Skipping step. Not enough beacon signals for trilateration.");
+        unfilteredTrilateratedFromBeaconsPoint = _lastTrilaterationPoint;
+    }
+    if (isnan(unfilteredTrilateratedFromBeaconsPoint.x) || isnan(unfilteredTrilateratedFromBeaconsPoint.x))
+    {
+        NSLog(@"Skipping step. Bad trilateration.");
+        unfilteredTrilateratedFromBeaconsPoint = _lastTrilaterationPoint;
+    }
     NSLog(@"Previous location: %.2f %.2f",_lastTrilaterationPoint.x,_lastTrilaterationPoint.y);
     NSLog(@"Delta trilateration: %.2f %.2f",_deadReckoningDeltaCoord.x,_deadReckoningDeltaCoord.y);
     NSLog(@"Dead reckoning predicted position: %.2f %.2f",currentLocationByDR.x,currentLocationByDR.y);

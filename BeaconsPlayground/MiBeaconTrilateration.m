@@ -45,15 +45,18 @@
 
 + (CGPoint)trilaterateLocationFromBeacons:(NSArray*)beacons
 {
+    NSLog(@"trilaterateLocationFromBeacons: %ld",beacons.count);
     NSString *error = @"";
     NSArray *coordinates;
     
     NSMutableArray * filteredBeacons = [[NSMutableArray alloc] init];
     for (RangedBeacon * beacon in beacons)
     {
+        NSLog(@"Distance: %.2f",beacon.distance);
         if (beacon.distance > 0) [filteredBeacons addObject:beacon];
     }
     
+    NSLog(@"Beacons for trilateration: %ld",filteredBeacons.count);
     if (filteredBeacons.count < 3) return CGPointMake(0,0);     //We need 3 beacons
     
     NSMutableArray * selectedBeacons = [[NSMutableArray alloc] init];   //Only 3. If there are more - we take the closest 3.

@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeaconsPlayground/KalmanPlaygroundVC.m"
-            timestampString = "461527496.841548"
+            timestampString = "461867191.389488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "-beaconManager:rangingBeaconsDidFailForRegion:withError:"
             landmarkType = "5">
          </BreakpointContent>
