@@ -10,6 +10,9 @@
 #import "KalmanBeaconFilterManager.h"
 #import "KalmanFilteredBeacon.h"
 
+#import "SingleBeaconMeasurementStruct.h"
+#import "MeasurementWriter.h"
+
 @interface SingleBeaconConstantDistanceVC ()
 
 //Beacons
@@ -20,6 +23,10 @@
 @property (strong, nonatomic) KalmanBeaconFilterManager * kalmanFilterManager;
 
 @property (strong, nonatomic) KalmanFilteredBeacon * singleBeacon;
+
+@property (strong, nonatomic) NSDate * experimentStartDate;
+@property (unsafe_unretained, nonatomic) int iterationCount;
+@property (strong, nonatomic) NSString * measurementFileName;
 
 @end
 
@@ -32,15 +39,14 @@
 
     _singleBeacon = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:0.5 measuredValue:0 major:8661 minor:30611 coordinates:CGPointMake(0, 6.75)];
 //    _singleBeacon = [[RangedBeacon alloc] initWithMajor:8661 minor:30611 coordinates:CGPointMake(0, 6.75)];
+    _measurementFileName = @"1D Experiment 1.txt";
+    [[MeasurementWriter sharedInstance] createMeasurementFileWithName:_measurementFileName];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //TODO: init a single beacon
-    //
-    
+
     [self createEstimoteBeaconManagerWithRegion];       //Start with location manager first discover then ranging beacons
 }
 
@@ -171,6 +177,8 @@
         {
 //            _kalmanFilterManager = [[KalmanBeaconFilterManager alloc] initWithBeacons:@[rangedSingleEstBeacon]];
             _kalmanFilterManager = [[KalmanBeaconFilterManager alloc] initWithBeacons:@[_singleBeacon]];
+            _experimentStartDate = [NSDate date];
+            _iterationCount = 0;
         }
 //        [_kalmanFilterManager newIterationWithBeacons:@[rangedSingleEstBeacon]];    //Perform iteration with Kalman filter
         _singleBeacon.distance = rangedSingleEstBeacon.distance.doubleValue;
@@ -178,6 +186,10 @@
         
         KalmanFilteredBeacon * beaconAfterIteration = _kalmanFilterManager.currentIteration[0];
         NSLog(@"%@",[NSString stringWithFormat:@"x:%f-y:%f -> %f (%f)\n",beaconAfterIteration.coordinates.x,beaconAfterIteration.coordinates.y,beaconAfterIteration.distance,beaconAfterIteration.unfilteredDistance]);
+        NSTimeInterval secondsFromStart = [[NSDate date] timeIntervalSinceDate:_experimentStartDate];
+        _iterationCount++;
+        SingleBeaconMeasurementStruct * measurementStruct = [[SingleBeaconMeasurementStruct alloc] initWithIterationCount:_iterationCount secondsFromMeasurementStart:secondsFromStart filteredDistanceMeters:beaconAfterIteration.distance unfilteredDistanceMeters:beaconAfterIteration.unfilteredDistance];
+        [[MeasurementWriter sharedInstance] writeIterationWithSingleBeaconMeasurement:measurementStruct toFileWithName:_measurementFileName];
     }
 }
 

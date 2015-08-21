@@ -24,6 +24,9 @@
 #import "MiBeaconTrilateration.h"
 #import "NormalDistribution.h"
 
+#import "MeasurementWriter.h"
+#import "BeaconMotionMeasurementStruct.h"
+
 #define kStepDistance 0.5
 
 @interface KalmanPlaygroundVC ()
@@ -67,6 +70,11 @@
 //DR stuff later to be moved to kind of motion manager (or not, if lazy)
 //@property (unsafe_unretained, nonatomic) Coor
 
+//Measurement
+@property (strong, nonatomic) NSDate * experimentStartDate;
+@property (unsafe_unretained, nonatomic) int iterationCount;
+@property (strong, nonatomic) NSString * measurementFileName;
+
 @end
 
 @implementation KalmanPlaygroundVC
@@ -76,6 +84,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _measurementFileName = @"2D Experiment Square 1.txt";
+    [[MeasurementWriter sharedInstance] createMeasurementFileWithName:_measurementFileName];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -84,8 +95,10 @@
     
     [self initBeacons];                                 //Map beacons
     
-    ///TESTING!!
+    
     [self createEstimoteBeaconManagerWithRegion];       //Start with location manager first discover then ranging beacons
+    
+    ///TESTING!!
 //    if (!_map)                  //Only the 1st time to create the map with the beacons and the walls
 //    {
 //        _map = [[IndoorMappingModel alloc] initWithBeacons:_initialBeacons walls:_walls];
@@ -287,6 +300,9 @@
         {
             _kalmanBeaconMotionFilter = [[KalmanBeaconMotionFilter alloc] initWithPosition:_initialPosition errorCovariance:1 covarianceOfProcessNoise:_standardDeviationOfProcessNoise covarianceOfMeasurementNoise:_standardDeviationOfMeasurementNoise];
             _lastTrilaterationPoint = _initialPosition;
+            
+            _experimentStartDate = [NSDate date];
+            _iterationCount = 0;
         }
     }
     else
@@ -362,6 +378,11 @@
     
     [_displayVC visualizeIterationForCoordinate:_lastTrilaterationPoint];
     [_displayVC setPositionAngle:_rotationZ];
+    
+    NSTimeInterval secondsFromStart = [[NSDate date] timeIntervalSinceDate:_experimentStartDate];
+    _iterationCount++;
+    BeaconMotionMeasurementStruct * measurementStruct = [[BeaconMotionMeasurementStruct alloc] initWithIterationCount:_iterationCount secondsFromMeasurementStart:secondsFromStart filteredCoordinate:_lastTrilaterationPoint beaconsCoordinate:unfilteredTrilateratedFromBeaconsPoint deadReckoningCoordinate:currentLocationByDR K:_kalmanBeaconMotionFilter.kalmanGain.xVal];
+    [[MeasurementWriter sharedInstance] writeIterationWithBeaconMotionMeasurement:measurementStruct toFileWithName:_measurementFileName];
 }
 
 //- (void)performIterationWithBeacons:(NSArray*)beacons
