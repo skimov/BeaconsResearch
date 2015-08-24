@@ -30,6 +30,9 @@
 //To check for nan in trilateration
 #include <math.h>
 
+//Accumulate several beacons responses
+#import "PointStruct.h"
+
 #define kStepDistance 0.5
 
 @interface KalmanPlaygroundVC ()
@@ -78,6 +81,11 @@
 @property (unsafe_unretained, nonatomic) int iterationCount;
 @property (strong, nonatomic) NSString * measurementFileName;
 
+//For an approach one iteration = 1 step. Accumulating beacons points.
+//Or every N beacon signals. Or every N seconds.
+@property (unsafe_unretained, nonatomic) int intermediateBeaconsSignalsCount;
+@property (strong, nonatomic) NSMutableArray * intermediateBeaconsSignalsArrMu;
+
 @end
 
 @implementation KalmanPlaygroundVC
@@ -88,8 +96,12 @@
 {
     [super viewDidLoad];
     
+    [MeasurementWriter sharedInstance];
+    
     _measurementFileName = @"2D Experiment Square 1.txt";
     [[MeasurementWriter sharedInstance] createMeasurementFileWithName:_measurementFileName];
+    
+    NSLog(@"Measurement file exists: %d",[[MeasurementWriter sharedInstance] measurementFileExistsWithName:_measurementFileName]);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -120,30 +132,48 @@
     _discoveredBeacons = [[NSMutableArray alloc] init];
     _initialBeacons = [[NSMutableArray alloc] init];
     //TODO: calibrate these params
-    _standardDeviationOfMeasurementNoise = 0.5;
-    _standardDeviationOfProcessNoise = 0.5;
+//    _standardDeviationOfMeasurementNoise = 0.5;
+//    _standardDeviationOfProcessNoise = 0.5;
+    _standardDeviationOfMeasurementNoise = 0.1;
+    _standardDeviationOfProcessNoise = 0.1;
+    
     
     //Init beacons with coordinates, major and minor values here:
 //    KalmanFilteredBeacon * beacon1 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:1 coordinates:CGPointMake(0, 6.75)];
-    RangedBeacon * beacon1 = [[RangedBeacon alloc] initWithMajor:8661 minor:30611 coordinates:CGPointMake(0, 6.75)];
+    
+    RangedBeacon * beacon1 = [[RangedBeacon alloc] initWithMajor:1 minor:10 coordinates:CGPointMake(0, 6.75)];
     [_initialBeacons addObject:beacon1];
+//    RangedBeacon * beacon1 = [[RangedBeacon alloc] initWithMajor:8661 minor:30611 coordinates:CGPointMake(0, 6.75)];
+//    [_initialBeacons addObject:beacon1];
     Wall * wall1 = [[Wall alloc] initWithStart:CGPointMake(0, 0) end:CGPointMake(0, 13.5)];
     [_walls addObject:wall1];
     
+    
 //    KalmanFilteredBeacon * beacon2 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:2 coordinates:CGPointMake(2.25, 13.5)];
-    RangedBeacon * beacon2 = [[RangedBeacon alloc] initWithMajor:28360 minor:57119 coordinates:CGPointMake(2.25, 0)];
+    
+    RangedBeacon * beacon2 = [[RangedBeacon alloc] initWithMajor:1 minor:20 coordinates:CGPointMake(2.25, 0)];
+    [_initialBeacons addObject:beacon2];
+//    RangedBeacon * beacon2 = [[RangedBeacon alloc] initWithMajor:28360 minor:57119 coordinates:CGPointMake(2.25, 0)];
     [_initialBeacons addObject:beacon2];
     Wall * wall2 = [[Wall alloc] initWithStart:CGPointMake(4.5, 0) end:CGPointMake(0, 0)];
     [_walls addObject:wall2];
     
+    
 //    KalmanFilteredBeacon * beacon3 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:3 coordinates:CGPointMake(4.5, 6.75)];
-    RangedBeacon * beacon3 = [[RangedBeacon alloc] initWithMajor:16127 minor:61009 coordinates:CGPointMake(4.5, 6.75)];
+    
+    RangedBeacon * beacon3 = [[RangedBeacon alloc] initWithMajor:1 minor:30 coordinates:CGPointMake(4.5, 6.75)];
+    [_initialBeacons addObject:beacon3];
+//    RangedBeacon * beacon3 = [[RangedBeacon alloc] initWithMajor:16127 minor:61009 coordinates:CGPointMake(4.5, 6.75)];
     [_initialBeacons addObject:beacon3];
     Wall * wall3 = [[Wall alloc] initWithStart:CGPointMake(4.5, 13.5) end:CGPointMake(4.5, 0)];
     [_walls addObject:wall3];
     
+    
 //    KalmanFilteredBeacon * beacon4 = [[KalmanFilteredBeacon alloc] initWithPredictedVal:0 predictedErrorCovariance:1 standardDeviationOfMeasurementNoise:_standardDeviationOfMeasurementNoise measuredValue:0 major:1 minor:4 coordinates:CGPointMake(2.25, 0)];
-    RangedBeacon * beacon4 = [[RangedBeacon alloc] initWithMajor:58254 minor:5350 coordinates:CGPointMake(2.25, 13.5)];
+    
+    RangedBeacon * beacon4 = [[RangedBeacon alloc] initWithMajor:1 minor:40 coordinates:CGPointMake(2.25, 13.5)];
+    [_initialBeacons addObject:beacon4];
+//    RangedBeacon * beacon4 = [[RangedBeacon alloc] initWithMajor:58254 minor:5350 coordinates:CGPointMake(2.25, 13.5)];
     [_initialBeacons addObject:beacon4];
     Wall * wall4 = [[Wall alloc] initWithStart:CGPointMake(0, 13.5) end:CGPointMake(4.5, 13.5)];
     [_walls addObject:wall4];
@@ -367,7 +397,7 @@
         NSLog(@"Skipping step. Not enough beacon signals for trilateration.");
         unfilteredTrilateratedFromBeaconsPoint = _lastTrilaterationPoint;
     }
-    if (isnan(unfilteredTrilateratedFromBeaconsPoint.x) || isnan(unfilteredTrilateratedFromBeaconsPoint.x))
+    if (isnan(unfilteredTrilateratedFromBeaconsPoint.x) || isnan(unfilteredTrilateratedFromBeaconsPoint.y))
     {
         NSLog(@"Skipping step. Bad trilateration.");
         unfilteredTrilateratedFromBeaconsPoint = _lastTrilaterationPoint;
@@ -533,6 +563,50 @@
     [self performIterationWithBeacons:_initialBeacons];
 }
 
+
+#pragma mark - Gather values from several beacon signals, and then count the average
+
+- (void)addPointToAccumulateBeaconsSignals:(CGPoint)point
+{
+    if (!_intermediateBeaconsSignalsArrMu)
+    {
+        _intermediateBeaconsSignalsArrMu = [[NSMutableArray alloc] init];
+        _intermediateBeaconsSignalsCount = 0;
+    }
+    
+    PointStruct * pointStruct = [[PointStruct alloc] initWithPoint:point];
+    [_intermediateBeaconsSignalsArrMu addObject:pointStruct];
+    _intermediateBeaconsSignalsCount++;
+}
+
+- (CGPoint)getAccumulatedBeaconsSignal
+{
+    CGFloat deltaX = 0;
+    CGFloat deltaY = 0;
+    
+    for (PointStruct * point in _intermediateBeaconsSignalsArrMu)
+    {
+        deltaX += point.xCoord;
+        deltaY += point.yCoord;
+    }
+    
+    deltaX = deltaX/_intermediateBeaconsSignalsCount;
+    deltaY = deltaY/_intermediateBeaconsSignalsCount;
+    
+    return CGPointMake(deltaX, deltaY);
+}
+
+- (CGPoint)pointWithOneStepToPoint:(CGPoint)stepToPoint fromPoint:(CGPoint)stepFromPoint
+{
+    CGFloat distance = [self distanceFrom:stepFromPoint to:stepToPoint];
+    CGFloat proportion = kStepDistance/distance;
+    
+    CGFloat deltaX = (stepToPoint.x - stepFromPoint.x)*proportion;
+    CGFloat deltaY = (stepToPoint.y - stepFromPoint.y)*proportion;
+    
+    CGPoint finalPoint = CGPointMake(stepFromPoint.x + deltaX, stepFromPoint.y + deltaY);
+    return finalPoint;
+}
 
 #pragma mark - UI
 

@@ -37,6 +37,7 @@
 		28A99F931B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A99F921B863A2C000BE4F6 /* BeaconMotionMeasurementStruct.m */; };
 		28A99F971B8644D1000BE4F6 /* MeasurementWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A99F961B8644D1000BE4F6 /* MeasurementWriter.m */; };
 		28AB7C8F1B779A8C0006F56F /* Pedometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 28AB7C8E1B779A8C0006F56F /* Pedometer.m */; };
+		28B42C191B8B60680038F1EF /* PointStruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B42C181B8B60680038F1EF /* PointStruct.m */; };
 		28B546341B6E87BF0033C33D /* KalmanPlaygroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B546331B6E87BF0033C33D /* KalmanPlaygroundVC.m */; };
 		28CA6DA81B77C96000B62247 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CA6DA71B77C96000B62247 /* arrow.png */; };
 		28E429191B7CE14700493804 /* KalmanBeaconMotionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E429181B7CE14700493804 /* KalmanBeaconMotionFilter.m */; };
@@ -107,6 +108,8 @@
 		28A99F961B8644D1000BE4F6 /* MeasurementWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeasurementWriter.m; sourceTree = "<group>"; };
 		28AB7C8D1B779A8C0006F56F /* Pedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pedometer.h; sourceTree = "<group>"; };
 		28AB7C8E1B779A8C0006F56F /* Pedometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pedometer.m; sourceTree = "<group>"; };
+		28B42C171B8B60680038F1EF /* PointStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointStruct.h; sourceTree = "<group>"; };
+		28B42C181B8B60680038F1EF /* PointStruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointStruct.m; sourceTree = "<group>"; };
 		28B546321B6E87BF0033C33D /* KalmanPlaygroundVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalmanPlaygroundVC.h; sourceTree = "<group>"; };
 		28B546331B6E87BF0033C33D /* KalmanPlaygroundVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalmanPlaygroundVC.m; sourceTree = "<group>"; };
 		28CA6DA71B77C96000B62247 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -291,6 +294,7 @@
 		288C9D661ACC26B400C187A2 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				28B42C161B8B5FCA0038F1EF /* Point Struct */,
 				28A99F941B8642A6000BE4F6 /* Measurement */,
 				28AB7C8C1B779A790006F56F /* Step Detection */,
 				287A93741AE7EECC0046DB63 /* Display */,
@@ -362,6 +366,15 @@
 				28AB7C8E1B779A8C0006F56F /* Pedometer.m */,
 			);
 			name = "Step Detection";
+			sourceTree = "<group>";
+		};
+		28B42C161B8B5FCA0038F1EF /* Point Struct */ = {
+			isa = PBXGroup;
+			children = (
+				28B42C171B8B60680038F1EF /* PointStruct.h */,
+				28B42C181B8B60680038F1EF /* PointStruct.m */,
+			);
+			name = "Point Struct";
 			sourceTree = "<group>";
 		};
 		28E429151B7CE08500493804 /* 1D */ = {
@@ -559,6 +572,7 @@
 				28E4291C1B7CF5A100493804 /* KBMMatrix.m in Sources */,
 				285D519D1AC3239D00EE8DB4 /* AppDelegate.m in Sources */,
 				28E429191B7CE14700493804 /* KalmanBeaconMotionFilter.m in Sources */,
+				28B42C191B8B60680038F1EF /* PointStruct.m in Sources */,
 				285D519A1AC3239D00EE8DB4 /* main.m in Sources */,
 				28476F071B6F187C00CC1E9C /* SingleBeaconConstantDistanceVC.m in Sources */,
 			);

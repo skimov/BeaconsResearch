@@ -18,7 +18,7 @@
     {
         if (!sharedInstance)
         {
-            
+            sharedInstance = [[MeasurementWriter alloc] init];
         }
         
         return sharedInstance;
@@ -54,7 +54,9 @@
 
 - (void)createMeasurementFileWithName:(NSString*)name
 {
+    NSLog(@"%@ - createMeasurementFileWithName: %@",[self.class description],name);
     NSString * filePath = [self getPathForFileWithName:name];
+    NSLog(@"Measurement file path: %@",filePath);
     NSFileManager *filemgr = [NSFileManager defaultManager];
     [filemgr createFileAtPath:filePath contents:nil attributes:nil];
 }
@@ -88,9 +90,12 @@
     }
     
     NSData * theData = [toWrite dataUsingEncoding:NSUTF8StringEncoding];
-//    unsigned long long fsize = [myHandle seekToEndOfFile];
-//    unsigned long endFileStringSize = sizeof([@"\n]" dataUsingEncoding:NSUTF8StringEncoding]);
-//    [myHandle seekToFileOffset:fsize-endFileStringSize];
+    unsigned long long fsize = [myHandle seekToEndOfFile];
+    unsigned long endFileStringSize = sizeof([@"\n]" dataUsingEncoding:NSUTF8StringEncoding]);
+    unsigned long offset = fsize-endFileStringSize;
+    if (endFileStringSize > fsize) offset = 0;
+//    [myHandle seekToFileOffset:offset];
+    [myHandle seekToFileOffset:fsize];
     [myHandle writeData:theData];
     
     [myHandle closeFile];
@@ -142,7 +147,7 @@
     NSString * measurementString = @"";
     if ([self getSizeOfMeasuerementFileWithName:name] > 0)
     {
-        measurementString = @",";
+        measurementString = @",\n";
     }
     measurementString = [measurementString stringByAppendingString:jsonString];
     
